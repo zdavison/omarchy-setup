@@ -40,6 +40,18 @@ echo "==> GTK theme"
 # Omarchy renders dotfiles/omarchy/themed/gtk.css.tpl into the current theme on every theme change
 link "$HOME/.local/state/omarchy/current/theme/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
 
+echo "==> Firefox theme"
+# Link the default profile's userChrome.css to Omarchy's rendered firefox.css (Firefox must have run once)
+ff="$HOME/.config/mozilla/firefox"
+profile=$(sed -n 's/^Default=//p' "$ff/installs.ini" 2>/dev/null | head -1)
+if [ -n "$profile" ] && [ -d "$ff/$profile" ]; then
+  link "$HOME/.local/state/omarchy/current/theme/firefox.css" "$ff/$profile/chrome/userChrome.css"
+  pref='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
+  grep -qxF "$pref" "$ff/$profile/user.js" 2>/dev/null || echo "$pref" >> "$ff/$profile/user.js"
+else
+  echo "    no Firefox profile yet - open Firefox once, then re-run"
+fi
+
 echo "==> Fish"
 fish -c 'fisher update' >/dev/null
 if [ ! -f ~/.config/fish/secrets.fish ]; then
