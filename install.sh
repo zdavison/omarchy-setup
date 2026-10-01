@@ -59,6 +59,10 @@ else
   echo "    no Firefox profile yet - open Firefox once, then re-run"
 fi
 
+echo "==> Display"
+# Text size in px across shell, GTK and terminals (Omarchy default 12; bumped for the 3440x1440 ultrawide)
+omarchy display text size 13
+
 echo "==> Fish"
 fish -c 'fisher update' >/dev/null
 if [ ! -f ~/.config/fish/secrets.fish ]; then
