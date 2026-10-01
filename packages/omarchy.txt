@@ -3,3 +3,4 @@
 # browser firefox
 # dev-env node
 # service tailscale
+editor zed
