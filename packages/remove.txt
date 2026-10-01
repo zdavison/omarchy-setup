@@ -2,3 +2,4 @@
 obsidian
 obs-studio
 moonlight-qt
+# Keep chromium: Omarchy web apps (Google Maps, Discord) only run in Chromium-based browsers.
