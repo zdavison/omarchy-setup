@@ -62,6 +62,7 @@ fi
 echo "==> Display"
 # Text size in px across shell, GTK and terminals (Omarchy default 12; bumped for the 3440x1440 ultrawide)
 omarchy display text size 13
+omarchy theme bg set "$HOME/.config/omarchy/backgrounds/tokyo-night/minimal-sunset.jpg"
 
 echo "==> Fish"
 fish -c 'fisher update' >/dev/null
