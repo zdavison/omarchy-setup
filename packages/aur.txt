@@ -1,1 +1,2 @@
 # AUR packages, installed with `omarchy pkg aur add`.
+beeper-bin
