@@ -1,0 +1,4 @@
+# Arch packages (official repos), installed with `omarchy pkg add`.
+# One per line; comments and blank lines are ignored.
+fish
+fisher

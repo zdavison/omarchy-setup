@@ -1,0 +1,5 @@
+# Omarchy installers, run as `omarchy install <line>`.
+# See `omarchy install --help` for the full list. Examples:
+# browser firefox
+# dev-env node
+# service tailscale
