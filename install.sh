@@ -36,6 +36,10 @@ while IFS= read -r -d '' src; do
   link "$src" "$HOME/.config/$rel"
 done < <(find "$REPO/dotfiles" -type f -print0)
 
+echo "==> GTK theme"
+# Omarchy renders dotfiles/omarchy/themed/gtk.css.tpl into the current theme on every theme change
+link "$HOME/.local/state/omarchy/current/theme/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
+
 echo "==> Fish"
 fish -c 'fisher update' >/dev/null
 if [ ! -f ~/.config/fish/secrets.fish ]; then
