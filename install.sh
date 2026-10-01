@@ -21,6 +21,13 @@ while read -r line; do
   omarchy install $line
 done < <(list omarchy.txt)
 
+echo "==> Removing unused Omarchy apps"
+mapfile -t drop < <(list remove.txt)
+(( ${#drop[@]} )) && omarchy pkg drop "${drop[@]}"
+while IFS= read -r app; do
+  [ -f "$HOME/.local/share/applications/$app.desktop" ] && omarchy webapp remove "$app"
+done < <(list webapps-remove.txt)
+
 echo "==> Dotfiles"
 # Symlink every file under dotfiles/<app>/ into ~/.config/<app>/, backing up anything in the way
 link() {

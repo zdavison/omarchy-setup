@@ -1,0 +1,11 @@
+# Omarchy preinstalled web apps I don't use, removed with `omarchy webapp remove`.
+# Names match the launcher names in ~/.local/share/applications.
+Google Photos
+Google Messages
+Google Contacts
+WhatsApp
+X
+YouTube
+HEY
+Basecamp
+Zoom

@@ -1,0 +1,4 @@
+# Omarchy preinstalled packages I don't use, removed with `omarchy pkg drop`.
+obsidian
+obs-studio
+moonlight-qt
