@@ -55,7 +55,7 @@ if status is-interactive
 
     command -q mise; and mise activate fish | source
     command -q starship; and starship init fish | source
-    command -q zoxide; and zoxide init fish | source
+    command -q zoxide; and zoxide init fish --cmd j | source # j = jump (autojump habit), ji = interactive
 
     # python3 venv
     test -f ~/.config/venv/bin/activate.fish; and source ~/.config/venv/bin/activate.fish
