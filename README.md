@@ -15,12 +15,25 @@ git clone <this repo> ~/Work/omarchy-setup
 - `packages/aur.txt` — AUR packages (`omarchy pkg aur add`)
 - `packages/omarchy.txt` — Omarchy installers (`omarchy install ...`)
 - `dotfiles/<app>/...` — symlinked into `~/.config/<app>/...`
+- `claude/` — Claude Code work/personal account split (see below)
 
 To add an app, put it in the right list and re-run `install.sh`.
 To track a config file, move it into `dotfiles/` and re-run `install.sh`.
 
 Secrets live in `~/.config/fish/secrets.fish`, which is never committed.
 `install.sh` creates it from `dotfiles/fish/secrets.fish.example` if missing.
+
+## Claude Code: work and personal accounts
+
+Anything under the work directory uses the work subscription; everywhere else uses the personal one.
+The work directory is `CLAUDE_WORK_DIR` in `~/.config/fish/secrets.fish` (`install.sh` asks for it).
+`claude/work/mise.toml` is linked into that directory and sets `CLAUDE_CONFIG_DIR=~/.claude-work` there,
+which both the CLI and Zed's Claude agent pick up.
+
+The active account is labelled in the status line (🔴 WORK / 🟢 PERSONAL) and, for Zed,
+at the top of each reply via the account's `CLAUDE.md`.
+
+One-time login for the work account: `claude` from inside the work directory, then `/login`.
 
 ## Secure Boot (dual boot with Windows)
 
