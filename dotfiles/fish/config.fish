@@ -63,6 +63,19 @@ if status is-interactive
     # File watchers limit so webpack doesn't freeze your machine.
     ulimit -n 10240
 
+    # eza (ported from Omarchy's bash aliases)
+    if command -q eza
+        alias ls="eza -lh --group-directories-first --icons=auto"
+        alias lsa="ls -a"
+        alias lt="eza --tree --level=2 --long --icons --git"
+        alias lta="lt -a"
+    end
+
+    # Arch's zed package installs the CLI as zeditor
+    if command -q zeditor
+        alias zed="zeditor"
+    end
+
     ## git functions
     alias git-cleanup="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
     alias gpo="git push origin HEAD"

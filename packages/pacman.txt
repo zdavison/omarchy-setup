@@ -2,3 +2,5 @@
 # One per line; comments and blank lines are ignored.
 fish
 fisher
+firefox-ublock-origin   # adblocker, installed system-wide into Firefox and updated by pacman
+sbctl                   # Secure Boot keys; limine-update signs Limine with it (see README)
