@@ -15,6 +15,7 @@ git clone <this repo> ~/Work/omarchy-setup
 - `packages/aur.txt` — AUR packages (`omarchy pkg aur add`)
 - `packages/omarchy.txt` — Omarchy installers (`omarchy install ...`)
 - `dotfiles/<app>/...` — symlinked into `~/.config/<app>/...`
+- `dotfiles/mise/config.toml` — global mise tools, for CLIs that are missing or stale in the Arch repos/AUR (e.g. Datadog `pup`)
 - `claude/` — Claude Code work/personal account split (see below)
 
 To add an app, put it in the right list and re-run `install.sh`.

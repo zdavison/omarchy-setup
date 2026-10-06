@@ -1,0 +1,11 @@
+[tools]
+bun = "1.4.2"
+claude = "latest"
+codex = "latest"
+gh = "latest"
+node = "26.8.2"
+"npm:playwright" = "latest"
+"github:DataDog/pup" = "latest" # Datadog CLI; AUR package lags far behind
+
+[settings.upgrade]
+auto_prune = false
