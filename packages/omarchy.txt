@@ -5,3 +5,4 @@
 # service tailscale
 editor zed
 browser firefox
+service tailscale

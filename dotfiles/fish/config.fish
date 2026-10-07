@@ -42,7 +42,7 @@ else
 end
 set -gx EDITOR "$VISUAL"
 
-set -gx NODE_OPTIONS "--max_old_space_size=4096"
+set -gx NODE_OPTIONS "--max_old_space_size=16384"
 set -gx DOCKER_BUILDKIT 1
 # AWS (default profile is a personal test account).
 set -gx AWS_PROFILE default
@@ -99,3 +99,4 @@ function git-changed-files-without-extension
     end
     git diff --name-only $branch_name...HEAD | string replace -r '\.[^.]*$' ''
 end
+set -x PATH $PATH 
