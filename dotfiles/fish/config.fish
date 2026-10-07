@@ -99,4 +99,3 @@ function git-changed-files-without-extension
     end
     git diff --name-only $branch_name...HEAD | string replace -r '\.[^.]*$' ''
 end
-set -x PATH $PATH 
