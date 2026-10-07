@@ -76,6 +76,11 @@ if status is-interactive
         alias zed="zeditor"
     end
 
+    # Start Zed without an account's CLAUDE_CONFIG_DIR (see claude-accounts)
+    if command -q claude-accounts
+        claude-accounts shell-init fish | source
+    end
+
     ## git functions
     alias git-cleanup="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
     alias gpo="git push origin HEAD"

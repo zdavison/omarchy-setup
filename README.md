@@ -26,15 +26,12 @@ Secrets live in `~/.config/fish/secrets.fish`, which is never committed.
 
 ## Claude Code: work and personal accounts
 
-Anything under the work directory uses the work subscription; everywhere else uses the personal one.
-The work directory is `CLAUDE_WORK_DIR` in `~/.config/fish/secrets.fish` (`install.sh` asks for it).
-`claude/work/mise.toml` is linked into that directory and sets `CLAUDE_CONFIG_DIR=~/.claude-work` there,
-which both the CLI and Zed's Claude agent pick up.
+Handled by [claude-accounts](../claude-accounts): anything under `CLAUDE_WORK_DIR`
+(in `~/.config/fish/secrets.fish`) uses the work subscription (`~/.claude-work`), everywhere else
+the personal one. The terminal shows the account above the prompt; Zed shows it as a Notice.
+`install.sh` links the CLI and runs `claude-accounts apply`; check the setup with `claude-accounts doctor`.
 
-The active account is labelled in the status line (🔴 WORK / 🟢 PERSONAL) and, for Zed,
-at the top of each reply via the account's `CLAUDE.md`.
-
-One-time login for the work account: `claude` from inside the work directory, then `/login`.
+One-time login for the work account: `claude-accounts login work`.
 
 ## Secure Boot (dual boot with Windows)
 

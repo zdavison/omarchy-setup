@@ -102,27 +102,37 @@ if [ "$(getent passwd "$USER" | cut -d: -f7)" != /usr/bin/fish ]; then
 fi
 
 echo "==> Claude Code accounts"
-# Personal subscription lives in ~/.claude. Under CLAUDE_WORK_DIR (set in secrets.fish), mise sets
-# CLAUDE_CONFIG_DIR=~/.claude-work so the CLI and Zed use the work subscription.
-# Each account's CLAUDE.md and status line label which one is active.
+# claude-accounts picks the account by directory and shows it (see ~/Work/claude-accounts).
+# Personal uses ~/.claude; CLAUDE_WORK_DIR (secrets.fish) uses ~/.claude-work.
+CA_REPO="$HOME/Work/claude-accounts"
 WORK_DIR="$(fish --no-config -c "source '$secrets'; echo \$CLAUDE_WORK_DIR" </dev/null)"
 WORK_DIR="${WORK_DIR/#\~/$HOME}"
-link "$REPO/claude/statusline.sh" "$HOME/.claude/statusline.sh"
-for account in personal:.claude work:.claude-work; do
-  dir="$HOME/${account#*:}"
-  link "$REPO/claude/${account%%:*}/CLAUDE.md" "$dir/CLAUDE.md"
-  # Claude Code rewrites settings.json, so merge the status line in rather than linking the file
-  settings="$dir/settings.json"
-  [ -f "$settings" ] || echo '{}' > "$settings"
-  jq '.statusLine = {type: "command", command: "~/.claude/statusline.sh"}' "$settings" > "$settings.tmp"
-  mv "$settings.tmp" "$settings"
+# The account labels used to live in these links; drop them if they still point into this repo
+for f in "$HOME/.claude/CLAUDE.md" "$HOME/.claude-work/CLAUDE.md" "$HOME/.claude/statusline.sh"; do
+  case "$(readlink "$f" 2>/dev/null)" in "$REPO"/*) rm "$f" && echo "    removed $f" ;; esac
 done
-if [ -n "$WORK_DIR" ]; then
-  link "$REPO/claude/work/mise.toml" "$WORK_DIR/mise.toml"
-  mise trust --quiet "$WORK_DIR/mise.toml"
-  [ -f ~/.claude-work/.credentials.json ] || echo "    work account not logged in - run claude in $WORK_DIR, then /login"
+# ...and the status line that ran the old statusline.sh
+for settings in "$HOME/.claude/settings.json" "$HOME/.claude-work/settings.json"; do
+  if jq -e '.statusLine.command == "~/.claude/statusline.sh"' "$settings" >/dev/null 2>&1; then
+    jq 'del(.statusLine)' "$settings" > "$settings.tmp" && mv "$settings.tmp" "$settings"
+    echo "    removed old status line from $settings"
+  fi
+done
+if [ -x "$CA_REPO/bin/claude-accounts" ]; then
+  link "$CA_REPO/bin/claude-accounts" "$HOME/.local/bin/claude-accounts"
+  ca="$HOME/.local/bin/claude-accounts"
+  "$ca" init
+  if [ -n "$WORK_DIR" ]; then
+    link "$REPO/claude/work/mise.toml" "$WORK_DIR/mise.toml"
+    mise trust --quiet "$WORK_DIR/mise.toml"
+    jq -e '.accounts | has("work")' "${XDG_CONFIG_HOME:-$HOME/.config}/claude-accounts/accounts.json" >/dev/null \
+      || "$ca" add work --dir "$WORK_DIR" --emoji 🔴
+  else
+    echo "    CLAUDE_WORK_DIR not set - everything uses the personal account"
+  fi
+  CLAUDE_ACCOUNTS_MARKETPLACE="$CA_REPO" "$ca" apply
 else
-  echo "    CLAUDE_WORK_DIR not set - everything uses the personal account"
+  echo "    clone claude-accounts into $CA_REPO and re-run to set up Claude Code accounts"
 fi
 
 echo "Done. Log out and back in for shell changes to take effect."
