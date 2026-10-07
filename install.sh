@@ -107,8 +107,8 @@ echo "==> Claude Code accounts"
 CA_REPO="$HOME/Work/claude-accounts"
 WORK_DIR="$(fish --no-config -c "source '$secrets'; echo \$CLAUDE_WORK_DIR" </dev/null)"
 WORK_DIR="${WORK_DIR/#\~/$HOME}"
-# The account labels used to live in these links; drop them if they still point into this repo
-for f in "$HOME/.claude/CLAUDE.md" "$HOME/.claude-work/CLAUDE.md" "$HOME/.claude/statusline.sh"; do
+# Drop the old status line link if it still points into this repo
+for f in "$HOME/.claude/statusline.sh"; do
   case "$(readlink "$f" 2>/dev/null)" in "$REPO"/*) rm "$f" && echo "    removed $f" ;; esac
 done
 # ...and the status line that ran the old statusline.sh
@@ -118,6 +118,8 @@ for settings in "$HOME/.claude/settings.json" "$HOME/.claude-work/settings.json"
     echo "    removed old status line from $settings"
   fi
 done
+link "$REPO/claude/personal/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+link "$REPO/claude/work/CLAUDE.md" "$HOME/.claude-work/CLAUDE.md"
 if [ -x "$CA_REPO/bin/claude-accounts" ]; then
   link "$CA_REPO/bin/claude-accounts" "$HOME/.local/bin/claude-accounts"
   ca="$HOME/.local/bin/claude-accounts"
