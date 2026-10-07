@@ -4,3 +4,4 @@ fish
 fisher
 firefox-ublock-origin   # adblocker, installed system-wide into Firefox and updated by pacman
 sbctl                   # Secure Boot keys; limine-update signs Limine with it (see README)
+k9s                     # Kubernetes TUI
